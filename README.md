@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-**Node version 18.x**
+**Node version 16.x**
 
 ### Cloning the repository
 
