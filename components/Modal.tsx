@@ -10,7 +10,7 @@ interface ModalProps {
   body?: React.ReactElement;
   footer?: React.ReactElement;
   actionLabel: string;
-  disable?: boolean;
+  disabled?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -21,19 +21,21 @@ const Modal: React.FC<ModalProps> = ({
   body,
   footer,
   actionLabel,
-  disable,
+  disabled,
 }) => {
   const handleClose = useCallback(() => {
-    if (disable) return;
+    if (disabled) return;
 
     onClose();
-  }, [disable, onClose]);
+  }, [disabled, onClose]);
 
   const handleSubmit = useCallback(() => {
-    if (disable) return;
+    if (disabled) {
+      return;
+    }
 
     onSubmit();
-  }, [disable, onSubmit]);
+  }, [onSubmit, disabled]);
 
   if (!isOpen) return null;
 
@@ -118,7 +120,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Footer */}
             <div className="flex flex-col gap-2 p-10">
               <Button 
-                disabled={disable} 
+                disabled={disabled} 
                 label={actionLabel} 
                 secondary 
                 fullWidth 
