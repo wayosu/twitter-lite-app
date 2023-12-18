@@ -50,11 +50,11 @@ const EditModal = () => {
       });
       mutateFetchedUser();
 
-      toast.success("Updated");
+      toast.success("Profile updated successfully.");
 
       editModal.onClose();
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("An error occurred.");
     } finally {
       setIsLoading(false);
     }
