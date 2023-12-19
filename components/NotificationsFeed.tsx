@@ -11,7 +11,7 @@ const NotificationsFeed = () => {
 
   useEffect(() => {
     mutateCurrentUser();
-  }, [mutateCurrentUser])
+  }, [mutateCurrentUser]);
 
   if (fetchedNotifications.length === 0) {
     return (
@@ -30,30 +30,48 @@ const NotificationsFeed = () => {
 
   return (
     <div className="flex flex-col">
-      {fetchedNotifications.map((notification: Record<string, any>) => (
-        <Link
-          href={`/posts/${notification.postId}`}
-          key={notification.id}
-          className="
-            flex
-            flex-row
-            items-center
-            p-6
-            gap-4
-            border-b-[1px]
-            border-neutral-800
-            hover:bg-neutral-800
-            transition
-          "
-        >
-          <BsTwitter color="white" size={32} />
-          <p className="text-white">
-            {notification.body}
-          </p>
-        </Link>
-      ))}
+      {fetchedNotifications.map((notification: Record<string, any>) =>
+        notification.postId !== null ? (
+          <Link
+            href={`/posts/${notification.postId}`}
+            key={notification.id}
+            className="
+              flex
+              flex-row
+              items-center
+              p-6
+              gap-4
+              border-b-[1px]
+              border-neutral-800
+              hover:bg-neutral-800
+              transition
+            "
+          >
+            <BsTwitter color="white" size={32} />
+            <p className="text-white">{notification.body}</p>
+          </Link>
+        ) : (
+          <div
+            key={notification.id}
+            className="
+              flex
+              flex-row
+              items-center
+              p-6
+              gap-4
+              border-b-[1px]
+              border-neutral-800
+              hover:bg-neutral-800
+              transition
+            "
+          >
+            <BsTwitter color="white" size={32} />
+            <p className="text-white">{notification.body}</p>
+          </div>
+        )
+      )}
     </div>
   );
-}
- 
+};
+
 export default NotificationsFeed;

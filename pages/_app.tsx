@@ -8,6 +8,11 @@ import LoginModal from "@/components/modals/LoginModal";
 import RegisterModal from "@/components/modals/RegisterModal";
 import EditModal from "@/components/modals/EditModal";
 
+export const metadata = {
+  title: 'Twitter Lite App',
+  description: 'A Twitter Lite App built with Next.js, Tailwind CSS, Prisma & MongoDB.',
+};
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
