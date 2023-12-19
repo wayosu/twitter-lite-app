@@ -1,5 +1,7 @@
 # Twitter App with Minimal Version - NEXT JS, Prisma & MongoDB
 
+![Screenshot App](./screenshot-app.png)
+
 ### Prerequisites
 
 **Node version 16.x**
