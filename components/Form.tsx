@@ -6,6 +6,7 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import usePosts from "@/hooks/usePosts";
+import usePost from "@/hooks/usePost";
 
 import Button from "./Button";
 import Avatar from "./Avatar";
@@ -22,6 +23,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
 
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutatePosts } = usePosts();
+  const { mutate: mutatePost } = usePost(postId as string);
 
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -30,30 +32,35 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
     try {
       setIsLoading(true);
 
-      await axios.post("/api/posts", { body });
+      const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
 
-      toast.success("Tweet created successfully.");
+      await axios.post(url, { body });
+
+      if (isComment) {
+        toast.success("Comment created successfully.");
+      } else {
+        toast.success("Tweet created successfully.");
+      }
 
       setBody("");
       mutatePosts();
+      mutatePost();
     } catch (error) {
       toast.error("An error occurred.");
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts]);
+  }, [body, mutatePosts, postId, isComment, mutatePost]);
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
       {currentUser ? (
         <div className="flex flex-row gap-4 my-4">
           <div>
-            <Avatar
-              userId={currentUser?.id}
-            />
+            <Avatar userId={currentUser?.id} />
           </div>
           <div className="w-full">
-            <textarea 
+            <textarea
               disabled={isLoading}
               onChange={(e) => setBody(e.target.value)}
               value={body}
@@ -72,7 +79,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                 text-[20px]
               "
             />
-            <hr 
+            <hr
               className="
                 opacity-0
                 peer-focus:opacity-100
@@ -80,7 +87,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                 w-full
                 border-neutral-800
                 transition
-              " 
+              "
             />
             <div className="mt-4 flex flex-row justify-end">
               <Button
