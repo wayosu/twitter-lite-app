@@ -1,4 +1,4 @@
-# [UNDER DEVELOPMENT] Twitter App with Minimal Version - NEXT JS, Prisma & MongoDB
+# Twitter App with Minimal Version - NEXT JS, Prisma & MongoDB
 
 ### Prerequisites
 
