@@ -28,6 +28,37 @@ export default async function handler(
       }
     });
 
+    // NOTIFICATION PART START
+    try {
+      const post = await prisma.post.findUnique({
+        where: {
+          id: postId,
+        },
+      });
+
+      if (post?.userId) {
+        await prisma.notification.create({
+          data: {
+            body: `@${currentUser.username} commented on your tweet`,
+            userId: post.userId,
+            postId: post.id,
+          },
+        });
+
+        await prisma.user.update({
+          where: {
+            id: post.userId,
+          },
+          data: {
+            hasNotification: true,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // NOTIFICATION PART END
+
     return res.status(200).json(comment);
   } catch (error) {
     console.log(error);
