@@ -42,17 +42,17 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   }, [router, href, onClick, currentUser, auth, loginModal]);
 
   return ( 
-    <div onClick={handleClick} className="flex flex-row items-center">
+    <div onClick={handleClick} className="flex flex-row items-center justify-center lg:justify-start">
       <div 
         className="
           relative
           rounded-full
-          h-14
-          w-14
+          h-12
+          w-12
           flex
           items-center
           justify-center
-          p-4
+          p-3
           hover:bg-blue-300
           hover:bg-opacity-10
           cursor-pointer

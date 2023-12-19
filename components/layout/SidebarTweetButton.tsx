@@ -1,27 +1,33 @@
-import useLoginModal from "@/hooks/useLoginModal";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { FaFeather } from "react-icons/fa";
 
+import useLoginModal from "@/hooks/useLoginModal";
+import useCurrentUser from "@/hooks/useCurrentUser";
+
 const SidebarTweetButton = () => {
   const router = useRouter();
-
   const loginModal = useLoginModal();
+  const { data: currentUser } = useCurrentUser();
 
   const onClick = useCallback(() => {
-    loginModal.onOpen();
-  }, [loginModal]);
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    router.push('/');
+  }, [loginModal, router, currentUser]);
 
   return (
-    <div onClick={onClick}>
+    <div onClick={onClick} className="flex justify-center lg:block">
       <div
         className="
-          mt-6
+          mt-2
           lg:hidden
           rounded-full
-          h-14
-          w-14
-          p-4
+          h-11
+          w-11
+          p-3
           flex
           items-center
           justify-center
